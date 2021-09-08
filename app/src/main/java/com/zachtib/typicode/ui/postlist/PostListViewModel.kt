@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zachtib.typicode.data.TypicodeRepository
 import com.zachtib.typicode.models.Post
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 sealed class PostListState {
@@ -16,7 +18,9 @@ sealed class PostListState {
 }
 
 @HiltViewModel
-class PostListViewModel @Inject constructor() : ViewModel() {
+class PostListViewModel @Inject constructor(
+    private val repository: TypicodeRepository,
+) : ViewModel() {
     private val mutableState = MutableLiveData<PostListState>()
 
     val state: LiveData<PostListState>
@@ -26,11 +30,12 @@ class PostListViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             mutableState.postValue(PostListState.Loading)
 
-            mutableState.postValue(PostListState.PostsLoaded(listOf(
-                Post(1, "Hello, World"),
-                Post(2, "Hello, Android"),
-                Post(3, "Hello, Internet"),
-            )))
+            try {
+                val posts = repository.getPostsList()
+                mutableState.postValue(PostListState.PostsLoaded(posts))
+            } catch (e: Exception) {
+                mutableState.postValue(PostListState.Error("Something went wrong."))
+            }
         }
     }
 }
