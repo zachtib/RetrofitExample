@@ -5,18 +5,18 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zachtib.typicode.R
 import com.zachtib.typicode.databinding.PostListFragmentBinding
 import com.zachtib.typicode.models.Post
-import com.zachtib.typicode.ui.PostListAdapter
 import com.zachtib.typicode.ui.viewBinding
 
 class PostListFragment: Fragment(R.layout.post_list_fragment) {
 
     private val binding by viewBinding(PostListFragmentBinding::bind)
     private val viewModel by viewModels<PostListViewModel>()
-    private val postAdapter = PostListAdapter()
+    private val postAdapter = PostListAdapter(::navigateToPostDetailScreen)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +62,8 @@ class PostListFragment: Fragment(R.layout.post_list_fragment) {
         postAdapter.submitList(posts)
     }
 
-    fun navigateToPostDetailScreen(post: Post) {
-
+    private fun navigateToPostDetailScreen(post: Post) {
+        val action = PostListFragmentDirections.toPostDetailFragment(postId = post.id)
+        findNavController().navigate(action)
     }
 }

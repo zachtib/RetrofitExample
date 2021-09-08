@@ -11,12 +11,16 @@
         android:label="PostListFragment"
         tools:layout="@layout/post_list_fragment">
         <action
-            android:id="@+id/action_postListFragment_to_postDetailFragment"
+            android:id="@+id/toPostDetailFragment"
             app:destination="@id/postDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/postDetailFragment"
         android:name="com.zachtib.typicode.ui.postdetail.PostDetailFragment"
         android:label="PostDetailFragment"
-        tools:layout="@layout/post_detail_fragment"/>
+        tools:layout="@layout/post_detail_fragment">
+        <argument
+            android:name="postId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

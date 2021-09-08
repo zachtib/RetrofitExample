@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Typicode</string>
+    <string name="by">by</string>
+    <string name="comments">Comments</string>
 </resources>

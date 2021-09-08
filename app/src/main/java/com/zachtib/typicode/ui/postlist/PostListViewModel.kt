@@ -24,9 +24,9 @@ class PostListViewModel : ViewModel() {
             mutableState.postValue(PostListState.Loading)
 
             mutableState.postValue(PostListState.PostsLoaded(listOf(
-                Post("Hello, World"),
-                Post("Hello, Android"),
-                Post("Hello, Internet"),
+                Post(1, "Hello, World"),
+                Post(2, "Hello, Android"),
+                Post(3, "Hello, Internet"),
             )))
         }
     }
