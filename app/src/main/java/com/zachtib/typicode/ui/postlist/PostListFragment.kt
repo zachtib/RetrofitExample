@@ -11,7 +11,10 @@ import com.zachtib.typicode.R
 import com.zachtib.typicode.databinding.PostListFragmentBinding
 import com.zachtib.typicode.models.Post
 import com.zachtib.typicode.ui.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class PostListFragment: Fragment(R.layout.post_list_fragment) {
 
     private val binding by viewBinding(PostListFragmentBinding::bind)

@@ -13,14 +13,14 @@ import com.zachtib.typicode.models.Comment
 import com.zachtib.typicode.models.Post
 import com.zachtib.typicode.models.User
 import com.zachtib.typicode.ui.viewBinding
-import com.zachtib.typicode.ui.viewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class PostDetailFragment : Fragment(R.layout.post_detail_fragment) {
     private val binding by viewBinding(PostDetailFragmentBinding::bind)
     private val args by navArgs<PostDetailFragmentArgs>()
-    private val viewModel by viewModels<PostDetailViewModel> {
-        viewModelFactory { PostDetailViewModel(postId = args.postId) }
-    }
+    private val viewModel by viewModels<PostDetailViewModel>()
 
     private val commentAdapter = CommentListAdapter()
 
@@ -35,6 +35,8 @@ class PostDetailFragment : Fragment(R.layout.post_detail_fragment) {
 
     override fun onStart() {
         super.onStart()
+
+        viewModel.loadPost(args.postId)
 
         viewModel.state.observe(this) { state ->
             when (state) {

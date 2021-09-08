@@ -7,8 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.zachtib.typicode.models.Comment
 import com.zachtib.typicode.models.Post
 import com.zachtib.typicode.models.User
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 sealed class PostDetailState {
     object Loading : PostDetailState()
@@ -20,14 +23,18 @@ sealed class PostDetailState {
     ) : PostDetailState()
 }
 
-class PostDetailViewModel(val postId: Int) : ViewModel() {
+@HiltViewModel
+class PostDetailViewModel @Inject constructor() : ViewModel() {
     private val mutableState = MutableLiveData<PostDetailState>()
 
     val state: LiveData<PostDetailState>
         get() = mutableState
 
-    init {
-        viewModelScope.launch {
+    private var fetchPostJob: Job? = null
+
+    fun loadPost(postId: Int) {
+        fetchPostJob?.cancel()
+        fetchPostJob = viewModelScope.launch {
             mutableState.postValue(PostDetailState.Loading)
             delay(2000)
             mutableState.postValue(PostDetailState.ContentLoaded(

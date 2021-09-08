@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zachtib.typicode.models.Post
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 sealed class PostListState {
     object Loading : PostListState()
@@ -13,7 +15,8 @@ sealed class PostListState {
     data class PostsLoaded(val posts: List<Post>) : PostListState()
 }
 
-class PostListViewModel : ViewModel() {
+@HiltViewModel
+class PostListViewModel @Inject constructor() : ViewModel() {
     private val mutableState = MutableLiveData<PostListState>()
 
     val state: LiveData<PostListState>
