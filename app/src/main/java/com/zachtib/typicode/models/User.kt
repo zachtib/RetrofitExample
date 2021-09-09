@@ -1,5 +1,8 @@
 package com.zachtib.typicode.models
 
 data class User(
-    val username: String
+    val id: Int,
+    val name: String,
+    val username: String,
+    val email: String,
 )

@@ -1,8 +1,8 @@
 package com.zachtib.typicode.models
 
 data class Post(
+    val userId: Int,
     val id: Int,
     val title: String,
-    val body: String = "",
-    val userId: Int = 1,
+    val body: String,
 )

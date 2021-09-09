@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zachtib.typicode.R
 import com.zachtib.typicode.databinding.PostDetailFragmentBinding
@@ -30,6 +31,8 @@ class PostDetailFragment : Fragment(R.layout.post_detail_fragment) {
         with(binding.postCommentsRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = commentAdapter
+            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
+            isNestedScrollingEnabled = false
         }
     }
 
