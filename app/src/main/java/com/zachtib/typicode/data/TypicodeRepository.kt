@@ -16,54 +16,47 @@ class TypicodeRepository @Inject constructor(
         // Repository initialization code will go here
     }
 
+    private val examplePosts = listOf(
+        Post(1, 1, "First Post", "Lorem Ipsum"),
+        Post(1, 2, "Second Post", "Lorem Ipsum"),
+        Post(1, 3, "Third Post", "Lorem Ipsum"),
+        Post(1, 4, "Fourth Post", "Lorem Ipsum"),
+        Post(1, 5, "Fifth Post", "Lorem Ipsum"),
+        Post(1, 6, "Sixth Post", "Lorem Ipsum"),
+        Post(1, 7, "Seventh Post", "Lorem Ipsum"),
+    )
+
     suspend fun getPostsList(): List<Post> {
         delay(500)
 
-        return listOf(
-            Post(1, "Hello, World"),
-            Post(2, "Hello, Android"),
-            Post(3, "Hello, Internet"),
-        )
+        return examplePosts
     }
 
     suspend fun getPostById(postId: Int): Post {
         delay(100)
 
-        return Post(
-            1,
-            "Hello, World",
-            """
-                This is some text that is long, and I will type a bunch of text.
-                
-                This is just a bunch of garbage words that I'm typing in so that this app can have some canned data to display, and this is a long line so that it will wrap text, I guess.
-                
-                Also newlines, I guess.
-            """.trimIndent()
-        )
+        return examplePosts.first { it.id == postId }
     }
 
     suspend fun getUserById(userId: Int): User {
         delay(100)
 
-        return User("superuser")
+        return User(userId, "Sample User", "sampleuser", "sample@example.com")
     }
 
     suspend fun getCommentsForPost(postId: Int): List<Comment> {
         delay(100)
 
         return listOf(
-            Comment("newuser", "user@example.com", "First!"),
-            Comment("otheruser", "user@example.com", "Second!"),
-            Comment("myuser", "user@example.com", "^ this"),
-            Comment("newuser", "user@example.com", "First!"),
-            Comment("otheruser", "user@example.com", "Second!"),
-            Comment("myuser", "user@example.com", "^ this"),
-            Comment("newuser", "user@example.com", "First!"),
-            Comment("otheruser", "user@example.com", "Second!"),
-            Comment("myuser", "user@example.com", "^ this"),
-            Comment("newuser", "user@example.com", "First!"),
-            Comment("otheruser", "user@example.com", "Second!"),
-            Comment("myuser", "user@example.com", "^ this"),
+            Comment(postId, 1, "First!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 2, "Second!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 3, "Third!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 4, "Ummm!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 5, "More!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 6, "Canned!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 7, "Data!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 8, "Goes!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
+            Comment(postId, 9, "Here!", "user@user.org", "Lorem Ipsum Dolor Sit Amet"),
         )
     }
 }
