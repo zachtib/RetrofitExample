@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zachtib.typicode.R
 import com.zachtib.typicode.databinding.PostListFragmentBinding
 import com.zachtib.typicode.models.Post
+import com.zachtib.typicode.ui.clearAdapterOnViewDetached
 import com.zachtib.typicode.ui.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,9 +25,12 @@ class PostListFragment: Fragment(R.layout.post_list_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            postRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            postRecyclerView.adapter = postAdapter
+        with(binding.postRecyclerView) {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = postAdapter
+
+            // Extension method from RecyclerViewExtensions.kt
+            clearAdapterOnViewDetached()
         }
     }
 

@@ -12,6 +12,7 @@ import com.zachtib.typicode.databinding.PostDetailFragmentBinding
 import com.zachtib.typicode.models.Comment
 import com.zachtib.typicode.models.Post
 import com.zachtib.typicode.models.User
+import com.zachtib.typicode.ui.clearAdapterOnViewDetached
 import com.zachtib.typicode.ui.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,9 @@ class PostDetailFragment : Fragment(R.layout.post_detail_fragment) {
             adapter = commentAdapter
             addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
             isNestedScrollingEnabled = false
+
+            // Extension method from RecyclerViewExtensions.kt
+            clearAdapterOnViewDetached()
         }
     }
 
