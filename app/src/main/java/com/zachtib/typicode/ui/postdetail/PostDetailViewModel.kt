@@ -8,12 +8,10 @@ import com.zachtib.typicode.data.TypicodeRepository
 import com.zachtib.typicode.models.Comment
 import com.zachtib.typicode.models.Post
 import com.zachtib.typicode.models.User
-import com.zachtib.typicode.ui.postlist.PostListState
+import com.zachtib.typicode.util.PostId
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import timber.log.Timber
 import javax.inject.Inject
 
 sealed class PostDetailState {
@@ -29,23 +27,16 @@ sealed class PostDetailState {
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
     private val repository: TypicodeRepository,
+    @PostId private val postId: Int,
 ) : ViewModel() {
     private val mutableState = MutableLiveData<PostDetailState>()
 
     val state: LiveData<PostDetailState>
         get() = mutableState
 
-    private var fetchPostJob: Job? = null
-
-    fun loadPost(postId: Int) {
-        // Cancel any existing fetch job, we don't want it returning after us
-        fetchPostJob?.cancel()
-
-        // set our state to loading
-        mutableState.value = PostDetailState.Loading
-
-        // launch a coroutine to fetch the data
-        fetchPostJob = viewModelScope.launch {
+    init {
+        Timber.d("Fetching post with id $postId")
+        viewModelScope.launch {
             try {
                 val post = repository.getPostById(postId)
                 val author = repository.getUserById(post.userId)
